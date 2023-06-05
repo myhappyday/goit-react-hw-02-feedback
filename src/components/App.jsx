@@ -21,10 +21,24 @@ class App extends Component {
     }, 1000);
   };
 
+  countTotalFeedback = () => {
+    return Object.values(this.state).reduce((total, value) => total + value);
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    return (this.state.good * 100) / this.countTotalFeedback();
+  };
+
   render() {
     const { good, neutral, bad } = this.state;
     const options = Object.keys(this.state);
+    const total = this.countTotalFeedback();
+    let percentage = this.countPositiveFeedbackPercentage().toFixed(0);
     // console.log(options);
+
+    if (isNaN(percentage)) {
+      percentage = 0;
+    }
     return (
       <Container>
         <Section title="Please, leave feedback"></Section>
@@ -64,6 +78,14 @@ class App extends Component {
           <p style={{ marginBottom: '5px', fontSize: '20px' }}>
             Bad:
             <span style={{ marginLeft: '10px' }}>{bad}</span>
+          </p>
+          <p style={{ marginBottom: '5px', fontSize: '20px' }}>
+            Total:
+            <span style={{ marginLeft: '10px' }}>{total}</span>
+          </p>
+          <p style={{ marginBottom: '5px', fontSize: '20px' }}>
+            Positive feedback:
+            <span style={{ marginLeft: '10px' }}>{percentage}%</span>
           </p>
         </div>
       </Container>
