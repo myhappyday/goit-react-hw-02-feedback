@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import Container from './App.styled';
 import Section from './Section';
 import FeedbackOptions from './FeedbackOptions';
+import Statistics from './Statistics';
 
 class App extends Component {
   state = {
@@ -27,51 +27,39 @@ class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
-    // console.log('good:', this.state.good);
-    return (this.state.good * 100) / this.countTotalFeedback();
+    const { good } = this.state;
+    const total = this.countTotalFeedback();
+    if (total === 0) {
+      return 0;
+    }
+    return (good * 100) / total;
   };
 
   render() {
     const { good, neutral, bad } = this.state;
     const options = Object.keys(this.state);
     const total = this.countTotalFeedback();
-    let percentage = this.countPositiveFeedbackPercentage().toFixed(0);
-    // console.log(options);
+    const positivePercentage =
+      this.countPositiveFeedbackPercentage().toFixed(0);
 
-    if (isNaN(percentage)) {
-      percentage = 0;
-    }
     return (
       <Container>
-        <Section title="Please, leave feedback"></Section>
-        <FeedbackOptions
-          options={options}
-          onLeaveFeedback={this.onLeaveFeedback}
-        />
+        <Section title="Please, leave feedback">
+          <FeedbackOptions
+            options={options}
+            onLeaveFeedback={this.onLeaveFeedback}
+          />
+        </Section>
 
-        <Section title="Statistics"></Section>
-        <div>
-          <p style={{ marginBottom: '5px', fontSize: '20px' }}>
-            Good:
-            <span style={{ marginLeft: '10px' }}>{good}</span>
-          </p>
-          <p style={{ marginBottom: '5px', fontSize: '20px' }}>
-            Neutral:
-            <span style={{ marginLeft: '10px' }}>{neutral}</span>
-          </p>
-          <p style={{ marginBottom: '5px', fontSize: '20px' }}>
-            Bad:
-            <span style={{ marginLeft: '10px' }}>{bad}</span>
-          </p>
-          <p style={{ marginBottom: '5px', fontSize: '20px' }}>
-            Total:
-            <span style={{ marginLeft: '10px' }}>{total}</span>
-          </p>
-          <p style={{ marginBottom: '5px', fontSize: '20px' }}>
-            Positive feedback:
-            <span style={{ marginLeft: '10px' }}>{percentage}%</span>
-          </p>
-        </div>
+        <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        </Section>
       </Container>
     );
   }

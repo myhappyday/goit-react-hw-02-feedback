@@ -8,6 +8,8 @@ export const WrapperBtn = styled.div`
 export const Button = styled.button`
   width: 80px;
   padding: 5px;
+  font-size: 14px;
+  font-weight: 600;
   text-transform: capitalize;
   cursor: pointer;
 
@@ -18,9 +20,8 @@ export const Button = styled.button`
   border-radius: 4px;
   transition: all 0.45s ease-Out;
 
-  :hover,
-  :focus {
+  :hover {
     background-color: rgba(185, 183, 240, 0.8);
-    /* box-shadow: rgb(158, 158, 158) 0px 4px 10px 4px; */
+    box-shadow: inset rgb(158, 158, 158) 0px 0px 16px 2px;
   }
 `;
