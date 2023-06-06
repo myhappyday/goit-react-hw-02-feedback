@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Container from './App.styled';
 import Section from './Section';
+import FeedbackOptions from './FeedbackOptions';
 
 class App extends Component {
   state = {
@@ -26,6 +27,7 @@ class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
+    // console.log('good:', this.state.good);
     return (this.state.good * 100) / this.countTotalFeedback();
   };
 
@@ -42,29 +44,11 @@ class App extends Component {
     return (
       <Container>
         <Section title="Please, leave feedback"></Section>
-        <div
-          style={{
-            display: 'flex',
-            gap: '15px',
-          }}
-        >
-          {options.map(option => (
-            <button
-              key={option}
-              type="button"
-              name={option}
-              onClick={this.onLeaveFeedback}
-              style={{
-                width: '80px',
-                padding: '5px',
-                textTransform: 'capitalize',
-                cursor: 'pointer',
-              }}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
+        <FeedbackOptions
+          options={options}
+          onLeaveFeedback={this.onLeaveFeedback}
+        />
+
         <Section title="Statistics"></Section>
         <div>
           <p style={{ marginBottom: '5px', fontSize: '20px' }}>
