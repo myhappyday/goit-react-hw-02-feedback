@@ -3,6 +3,7 @@ import Container from './App.styled';
 import Section from './Section';
 import FeedbackOptions from './FeedbackOptions';
 import Statistics from './Statistics';
+import Notification from './Notification';
 
 class App extends Component {
   state = {
@@ -16,10 +17,6 @@ class App extends Component {
     this.setState(prevState => ({
       [name]: prevState[name] + 1,
     }));
-    // console.log('state:', this.state);
-    setTimeout(() => {
-      console.log('state 1:', this.state);
-    }, 1000);
   };
 
   countTotalFeedback = () => {
@@ -52,13 +49,17 @@ class App extends Component {
         </Section>
 
         <Section title="Statistics">
-          <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={total}
-            positivePercentage={positivePercentage}
-          />
+          {total ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positivePercentage={positivePercentage}
+            />
+          ) : (
+            <Notification message="There is no feedback" />
+          )}
         </Section>
       </Container>
     );
